@@ -1,4 +1,68 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
 .phantom {
   display: none;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 15px;
+  max-width: 1200px;
+}
+
+.search-form {
+  width: 100%;
+  background-color: #a52a2a;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 50px;
+}
+.search-form input {
+  width: 200px;
+  height: 30px;
+  border-radius: 10px;
+  display: block;
+  margin-top: 10px;
+  padding-left: 10px;
+}
+
+.input-box {
+  display: flex;
+  justify-content: center;
+}
+
+.search-button {
+  margin-top: 10px;
+  margin-left: 5px;
+  background-image: url("/src/images/search.png");
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: 50%, 50%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.photo-card {
+  width: 400px;
+}
+.photo-card:nth-child(2n+1) {
+  margin-right: auto;
+}
+
+.gallery {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.load-more {
+  width: 100px;
+  height: 30px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  margin-bottom: 70px;
+  border-radius: 10px;
 }/*# sourceMappingURL=index.css.map */

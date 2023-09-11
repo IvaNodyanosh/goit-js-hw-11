@@ -33,7 +33,7 @@ const serverRequest = async () => {
 
     try {
         const response = await axios.get(`https://pixabay.com/api/?key=39382301-87481c6222a57772410795ead&q=${input.value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`);
-        
+        console.log(response);
         if (!response.data.hits.length > 0) {
             Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
             return
@@ -48,7 +48,7 @@ const serverRequest = async () => {
 
 const listCreate = function (hits) {
     const addList = hits.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `<div class="photo-card">
-  <img src="${webformatURL}" alt="${tags}" loading="lazy" data-img ="${largeImageURL}"/>
+  <img src="${webformatURL}" alt="${tags}" loading="lazy" data-img ="${largeImageURL}" width="400px" height="auto"/>
   <div class="info">
     <p class="info-item">
       <b>Likes: ${likes}</b>
@@ -75,6 +75,12 @@ const loadMore = async function () {
     try {
         const response = await axios.get(`https://pixabay.com/api/?key=39382301-87481c6222a57772410795ead&q=${input.value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`);
         gallery.insertAdjacentHTML('beforeend', listCreate(response.data.hits));
+        let totalPages = response.data.totalHits / 40;
+        console.log(totalPages);
+        if (totalPages < page) {
+            button.classList.add('phantom');
+            Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
+        }
 
     } catch (error) {
         console.log(error.message)
@@ -82,4 +88,4 @@ const loadMore = async function () {
 }
 
 searchForm.addEventListener("submit", (event) => { event.preventDefault(); serverRequest() });
-button.addEventListener('click', loadMore)
+button.addEventListener('click', loadMore);
