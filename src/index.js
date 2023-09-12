@@ -5,10 +5,6 @@ import Notiflix from 'notiflix';
 
 import "notiflix/dist/notiflix-3.2.6.min.css";
 
-
-
-
-
 const searchForm = document.querySelector('#search-form');
 
 const input = document.querySelector('#searchQuery');
@@ -42,7 +38,7 @@ const serverRequest = async () => {
             return
         }
         button.classList.remove("phantom");
-      return gallery.innerHTML = listCreate(response.data.hits);
+      gallery.innerHTML = listCreate(response.data.hits);
 
     } catch (error) {
         Notiflix.Notify.failure("ERROR!");
@@ -51,7 +47,7 @@ const serverRequest = async () => {
 
 const listCreate = function (hits) {
     const addList = hits.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `<div class="photo-card">
-  <img src="${webformatURL}" alt="${tags}" loading="lazy" data-img ="${largeImageURL}" width="350px" height="auto"/>
+  <a href="${largeImageURL}"><img src="${webformatURL}" alt="${tags}" loading="lazy" width="350px" height="auto"/></a>
   <div class="info">
     <p class="info-item">
       <b>Likes: ${likes}</b>
@@ -77,7 +73,7 @@ const loadMore = async function () {
     
     try {
         const response = await axios.get(`https://pixabay.com/api/?key=39382301-87481c6222a57772410795ead&q=${input.value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`);
-        gallery.insertAdjacentHTML('beforeend', listCreate(response.data.hits));
+      gallery.insertAdjacentHTML('beforeend', listCreate(response.data.hits));
         let totalPages = response.data.totalHits / 40;
         console.log(totalPages);
         if (totalPages < page) {
