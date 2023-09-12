@@ -7,6 +7,8 @@ import "notiflix/dist/notiflix-3.2.6.min.css";
 
 
 
+
+
 const searchForm = document.querySelector('#search-form');
 
 const input = document.querySelector('#searchQuery');
@@ -33,13 +35,14 @@ const serverRequest = async () => {
 
     try {
         const response = await axios.get(`https://pixabay.com/api/?key=39382301-87481c6222a57772410795ead&q=${input.value}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`);
-        console.log(response);
+      console.log(response);
+      Notiflix.Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
         if (!response.data.hits.length > 0) {
             Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
             return
         }
         button.classList.remove("phantom");
-        return gallery.innerHTML = listCreate(response.data.hits);
+      return gallery.innerHTML = listCreate(response.data.hits);
 
     } catch (error) {
         Notiflix.Notify.failure("ERROR!");
@@ -48,7 +51,7 @@ const serverRequest = async () => {
 
 const listCreate = function (hits) {
     const addList = hits.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `<div class="photo-card">
-  <img src="${webformatURL}" alt="${tags}" loading="lazy" data-img ="${largeImageURL}" width="400px" height="auto"/>
+  <img src="${webformatURL}" alt="${tags}" loading="lazy" data-img ="${largeImageURL}" width="350px" height="auto"/>
   <div class="info">
     <p class="info-item">
       <b>Likes: ${likes}</b>
@@ -79,7 +82,7 @@ const loadMore = async function () {
         console.log(totalPages);
         if (totalPages < page) {
             button.classList.add('phantom');
-            Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
+            Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
         }
 
     } catch (error) {
